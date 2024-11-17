@@ -12,7 +12,3 @@ def lambda_handler(event, context):
         'body': json.dumps({'result': result})
     }
 
-
-#test 123
-
-print ("Hello world")
