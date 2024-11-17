@@ -1,7 +1,7 @@
 import json
 
 def lambda_handler(event, context):
-    op = event.get('operator')
+    op = event.get('op', '').strip()
     num1 = int(event.get('num1', 0))
     num2 = int(event.get('num2', 0))
     result = None
