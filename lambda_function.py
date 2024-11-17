@@ -7,6 +7,12 @@ def lambda_handler(event, context):
     result = None
     if op == "*":
         result = num1 * num2
+    elif op == "/":
+        result = num1 / num2
+    elif op == "+":
+        result = num1 + num2
+    elif op == "-":
+        result = num1 - num2
     else:
         result = "INVALID"
 
