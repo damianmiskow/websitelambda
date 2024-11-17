@@ -13,3 +13,5 @@ def lambda_handler(event, context):
 
 
 #test 123
+
+print ("Hello world")
