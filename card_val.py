@@ -27,12 +27,13 @@ def lambda_handler(event, context):
     for element in over10_check:
         total+= element
     if total % 10 == 0:
-        result = True
+        return {
+            'statusCode': 200,
+            'body': json.dumps({'is_valid': True})
+        }
     else:
-        result = False
-
-    return {
-        'statusCode': 200,
-        'body': json.dumps({'result': result})
-    }
+        return {
+            'statusCode': 200,
+            'body': json.dumps({'is_valid': False})
+        }
 
