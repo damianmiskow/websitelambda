@@ -36,5 +36,5 @@ jobs:
           --zip-file fileb://lambda_function.zip
 
         aws lambda update-function-code \
-          --function-name Card_Val \
+          --function-name CardVal \
           --zip-file fileb://card_val.zip
