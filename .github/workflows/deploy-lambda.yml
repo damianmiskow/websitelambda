@@ -19,6 +19,7 @@ jobs:
       run: |
         zip lambda_function.zip lambda_function.py
         zip card_val.zip card_val.py
+        zip login_page.zip login_page.py
 
     # Step 3: Configure AWS credentials
     - name: Configure AWS credentials
@@ -38,3 +39,7 @@ jobs:
         aws lambda update-function-code \
           --function-name CardVal \
           --zip-file fileb://card_val.zip
+
+        aws lambda update-function-code \
+          --function-name LoginPage \
+          --zip-file fileb://login_page.zip
