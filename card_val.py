@@ -1,39 +1,31 @@
 import json
+import boto3
+import datetime
+
+dynamodb = boto3.resource('dynamodb')
+table = dynamodb.Table('ccn')
 
 def lambda_handler(event, context):
     card_num_str = str(event.get('card_num', 0))
     index = 1
 
-    card_num_list = []
-    for element in card_num_str:
-        card_num_list.insert(0, int(element))
+    card_num_list = [int(digit) for digit in reversed(card_num_str)]
 
-    multiplied_list = []
-    for element in card_num_list:
-        if index % 2 == 0:
-            multiplied_list.append(element * 2)
-        else:
-            multiplied_list.append(element)
-        index += 1
+    multiplied_list = [(num * 2 if i % 2 != 0 else num) for i, num in enumerate(card_num_list)]
+    adjusted_list = [num - 9 if num >= 10 else num for num in multiplied_list]
+    
+    total = sum(adjusted_list)
+    is_valid = total % 10 == 0
 
-    over10_check = []
-    for element in multiplied_list:
-        if element >= 10:
-            over10_check.append(element-9)
-        else: 
-            over10_check.append(element)
-
-    total = 0
-    for element in over10_check:
-        total+= element
-    if total % 10 == 0:
-        return {
-            'statusCode': 200,
-            'body': json.dumps({'is_valid': True})
+    date_str = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
+    table.put_item(
+        Item={
+            'date': date_str,
+            'ccn': card_num_str
         }
-    else:
-        return {
-            'statusCode': 200,
-            'body': json.dumps({'is_valid': False})
-        }
+    )
 
+    return {
+        'statusCode': 200,
+        'body': json.dumps({'is_valid': is_valid})
+    }
