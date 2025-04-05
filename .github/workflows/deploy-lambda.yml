@@ -47,4 +47,4 @@ jobs:
 
         aws lambda update-function-code \
           --function-name ExpenseTracker \
-          --zip-file fileb://expense.tracker.zip
+          --zip-file fileb://expense_tracker.zip
